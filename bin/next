@@ -1,0 +1,6 @@
+#!/bin/sh
+
+next_commit=$(git rev-list --reverse HEAD..master | head -1)
+test -n "$next_commit" || die "no commit found towards master"
+git checkout $next_commit
+git log -n1
