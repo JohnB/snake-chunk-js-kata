@@ -27,21 +27,25 @@ var moveSnake = function(snake) {
   return newSnake;
 }
 
+// Of course, in order to be a game we need to actually be able to lose, so
+// let's make it so when the snake hits the boundaries the game is over.
+
 var advanceGame = function() {
   snake = moveSnake(snake);
+  if (CHUNK.detectCollisionBetween(snake, CHUNK.gameBoundaries())) {
+    // CHUNK.detectCollision compares the pixels inside of an object to see if any of them overlap
+    CHUNK.endGame();
+    alert("Woops! you hit a wall!");
+    // `alert` displays a popup to the user with the passed in text.
+  }
   drawSnake(snake);
 }
-// To change the direction of the snake, we change the direction
-// if it's first segment.
+
 var changeDirection = function(direction) {
   snake[0].direction = direction;
 }
 
 var snake = [{ top: 0, left: 0, direction: "down" }];
+
 CHUNK.executeNTimesPerSecond(advanceGame, 1);
 CHUNK.onArrowKey(changeDirection);
-
-// CHUNK's onArrowKey function is similar to the executeNTimesPerSecond, in
-// that you give it a function to call when an arrow key is pressed.
-//
-// Holy mackeral, this is starting to look a lot like a game!
