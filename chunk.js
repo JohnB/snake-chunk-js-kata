@@ -2,6 +2,12 @@ var CHUNK = {
   canvasWidth: 800,
   canvasHeight: 600,
   pixelSize: 40,
+  KEY_MAPPING: {
+    39: "right",
+    40: "down",
+    37: "left",
+    38: "up"
+  },
   canvas: function() {
     if (CHUNK.context) { return CHUNK.context; }
     var canvas = document.getElementById("chunk-game");
@@ -13,6 +19,13 @@ var CHUNK = {
     CHUNK.processID = setInterval(function() {
       tickCallback();
     }, 1000 / gameSpeed);
+  },
+  onArrowKey: function(callback) {
+    document.addEventListener('keydown', function(e) {
+      if (CHUNK.KEY_MAPPING[e.which]) {
+        callback(CHUNK.KEY_MAPPING[e.which]);
+      }
+    });
   },
   endGame: function() {
     clearInterval(CHUNK.processID);
