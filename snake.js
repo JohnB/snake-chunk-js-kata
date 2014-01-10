@@ -1,14 +1,9 @@
-// Let's make it so an apple appears on the screen!
-
 var draw = function(snakeToDraw, apple) {
   var drawableSnake = { color: "blue", pixels: snakeToDraw };
   var drawableApple = { color: "red", pixels: [apple] };
   var drawableObjects = [drawableSnake, drawableApple];
   CHUNK.draw(drawableObjects);
 }
-
-// We renamed the drawSnake function and let it take multiple arguments so it
-// can draw an apple.
 
 var moveSegment = function(segment) {
   switch(segment.direction) {
@@ -37,27 +32,40 @@ var moveSnake = function(snake) {
   });
 }
 
+// Let's make it so the snake grows when we hit the apple!
+var growSnake = function(snake) {
+  var tipOfTailIndex = snake.length - 1;
+  // `array.length` tells us how many elements are in the snake array.
+  // arrays are zero indexed, so we subtract one to get the index of the tip.
+  var tipOfTail = snake[snake.length - 1];
+  snake.push({ top: tipOfTail.top, left: tipOfTail.left });
+  // Add a new segment at the tips location, but don't give it a direction so
+  // it will stay in place when the snake moves next.
+  return snake;
+}
+
+
+// Now each time the game advances we need to check for a collision between the
+// apple and snake, and when it finds one grow the snake and move the apple.
 var advanceGame = function() {
   snake = moveSnake(snake);
+  if (CHUNK.detectCollisionBetween([apple], snake)) {
+    snake = growSnake(snake);
+    apple = CHUNK.randomLocation();
+  }
   if (CHUNK.detectCollisionBetween(snake, CHUNK.gameBoundaries())) {
     CHUNK.endGame();
     alert("Woops! you hit a wall!");
   }
   draw(snake, apple);
-  // Let's make sure we pass the apple to the draw function!
 }
 
 var changeDirection = function(direction) {
   snake[0].direction = direction;
 }
 
-var apple = { top: 8, left: 10 };
-// And finally, let's create an apple to be drawn
-
+var apple = CHUNK.randomLocation();
 var snake = [{ top: 1, left: 0, direction: "down" }, { top: 0, left: 0, direction: "down" }];
 
 CHUNK.executeNTimesPerSecond(advanceGame, 1);
 CHUNK.onArrowKey(changeDirection);
-
-// Before moving on:
-// 1. Why do you think we put `[]` around the apple in the `draw` function?

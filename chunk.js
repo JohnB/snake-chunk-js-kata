@@ -80,5 +80,11 @@ var CHUNK = {
         return pixelB.top === pixelA.top && pixelB.left === pixelA.left;
       });
     });
+  },
+  randomLocation: function() {
+    return {
+      top: Math.floor(Math.random()*CHUNK.gameHeight()),
+      left: Math.floor(Math.random()*CHUNK.gameWidth()),
+    }
   }
 }
