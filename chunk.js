@@ -8,7 +8,7 @@ var CHUNK = {
     CHUNK.context = canvas.getContext("2d");
     return CHUNK.context;
   },
-  startGame: function(tickCallback, gameSpeed) {
+  executeNTimesPerSecond: function(tickCallback, gameSpeed) {
     tickCallback();
     CHUNK.processID = setInterval(function() {
       tickCallback();
