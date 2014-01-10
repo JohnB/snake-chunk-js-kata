@@ -32,31 +32,41 @@ var moveSnake = function(snake) {
   });
 }
 
-// Let's make it so the snake grows when we hit the apple!
 var growSnake = function(snake) {
   var tipOfTailIndex = snake.length - 1;
-  // `array.length` tells us how many elements are in the snake array.
-  // arrays are zero indexed, so we subtract one to get the index of the tip.
   var tipOfTail = snake[snake.length - 1];
   snake.push({ top: tipOfTail.top, left: tipOfTail.left });
-  // Add a new segment at the tips location, but don't give it a direction so
-  // it will stay in place when the snake moves next.
   return snake;
 }
 
 
-// Now each time the game advances we need to check for a collision between the
-// apple and snake, and when it finds one grow the snake and move the apple.
+// The last thing we need to do is check to see if the snake ran into itself.
+var ate = function(snake, otherThing) {
+  var head = snake[0];
+  return CHUNK.detectCollisionBetween([head], otherThing);
+}
+
 var advanceGame = function() {
-  snake = moveSnake(snake);
-  if (CHUNK.detectCollisionBetween([apple], snake)) {
-    snake = growSnake(snake);
+  var newSnake = moveSnake(snake);
+
+  if (ate(newSnake, snake)) {
+    CHUNK.endGame();
+    alert("Woops! You ate yourself!");
+  }
+  // Now we just have to check if the newSnake ate it's previous self to see if
+  // there was a collision!
+
+  if (ate(newSnake, [apple])) {
+    newSnake = growSnake(newSnake);
     apple = CHUNK.randomLocation();
   }
-  if (CHUNK.detectCollisionBetween(snake, CHUNK.gameBoundaries())) {
+
+  if (ate(newSnake, CHUNK.gameBoundaries())) {
     CHUNK.endGame();
     alert("Woops! you hit a wall!");
   }
+
+  snake = newSnake;
   draw(snake, apple);
 }
 
