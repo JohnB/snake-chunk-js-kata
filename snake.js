@@ -1,8 +1,14 @@
-var drawSnake = function(snakeToDraw) {
+// Let's make it so an apple appears on the screen!
+
+var draw = function(snakeToDraw, apple) {
   var drawableSnake = { color: "blue", pixels: snakeToDraw };
-  var drawableObjects = [drawableSnake];
+  var drawableApple = { color: "red", pixels: [apple] };
+  var drawableObjects = [drawableSnake, drawableApple];
   CHUNK.draw(drawableObjects);
 }
+
+// We renamed the drawSnake function and let it take multiple arguments so it
+// can draw an apple.
 
 var moveSegment = function(segment) {
   switch(segment.direction) {
@@ -19,16 +25,8 @@ var moveSegment = function(segment) {
   }
 }
 
-// You'll notice that only the head of the snake continues moving down. To fix
-// that we'll want to assign a further forward segments direction to the
-// newSegment.  This will allow changes in direction to cascade down the snakes
-// body.
-
 var segmentFurtherForwardThan = function(index, snake) {
-  // You recall from earlier that `index` means "location in list"
   return snake[index - 1] || snake[index];
-  // `||` is an operator that returns the value that is truthy. If both are
-  // truthy, it returns the one on the left of the `||`
 }
 
 var moveSnake = function(snake) {
@@ -45,14 +43,21 @@ var advanceGame = function() {
     CHUNK.endGame();
     alert("Woops! you hit a wall!");
   }
-  drawSnake(snake);
+  draw(snake, apple);
+  // Let's make sure we pass the apple to the draw function!
 }
 
 var changeDirection = function(direction) {
   snake[0].direction = direction;
 }
 
+var apple = { top: 8, left: 10 };
+// And finally, let's create an apple to be drawn
+
 var snake = [{ top: 1, left: 0, direction: "down" }, { top: 0, left: 0, direction: "down" }];
 
 CHUNK.executeNTimesPerSecond(advanceGame, 1);
 CHUNK.onArrowKey(changeDirection);
+
+// Before moving on:
+// 1. Why do you think we put `[]` around the apple in the `draw` function?
