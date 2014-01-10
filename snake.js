@@ -4,19 +4,42 @@ var drawSnake = function(snakeToDraw) {
   CHUNK.draw(drawableObjects);
 }
 
-var snake = [{ top: 0, left: 0}];
-drawSnake(snake);
+// Now that the snake is moving on it's own, let's make it so it can move in
+// different directions!
+
+// First, we'll create a function that moves the segment based upon it's
+// direction:
+
+var moveSegment = function(segment) {
+  if (segment.direction == "down") {
+    return { top: segment.top + 1, left: segment.left }
+  } else if (segment.direction == "up") {
+    return { top: segment.top - 1, left: segment.left }
+  } else if (segment.direction == "right") {
+    return { top: segment.top, left: segment.left + 1 }
+  } else if (segment.direction == "left") {
+    return { top: segment.top, left: segment.left - 1 }
+  }
+  return segment;
+}
+
+// The `if` statement allows us to make choices about what code to execute
+// based upon values. Here we use a series of `if` and `if else`s to create a
+// new segment at its next location. In the event the direction isn't one of
+// the 4 we want, we return the original segment.
 
 var moveSnake = function(snake) {
   var oldSegment = snake[0];
-  var newSegment = { top: oldSegment.top + 1, left: oldSegment.left };
+  var newSegment = moveSegment(oldSegment);
+  // Once a segment is moved, we give it a direction to move in the next time.
+  // Otherwise the snake will just stop moving!
+  newSegment.direction = oldSegment.direction;
   var newSnake = [newSegment];
   return newSnake;
 }
 
-// Hooray! We can both draw and move the snake! Of course, having our users
-// copy and paste lines of code into their javascript console isn't a wonderful
-// idea, so we're going to have CHUNK execute the move and draw commands for us .
+var snake = [{ top: 0, left: 0, direction: "down" }];
+// Add a direction to the starting snakes segments so it knows where to go.
 
 var advanceGame = function() {
   snake = moveSnake(snake);
@@ -25,14 +48,7 @@ var advanceGame = function() {
 
 CHUNK.executeNTimesPerSecond(advanceGame, 1);
 
-// Bam! Now the snake moves down until it runs off the game screen.
-//
-// Because functions are just another kind of value (like numbers, arrays,
-// objects, strings, etc.) we can pass them as arguments to other functions.
-//
-// "Hey Sean, create a function that moves the game forward. Next tell chunk to
-// execute that function once per-second.
-
 // Before you move on:
-//
-// 1. How can you increase the speed at which the snake moves?
+// 1. Use a switch statement instead of a series of ifs:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch?redirectlocale=en-US&redirectslug=JavaScript%2FReference%2FStatements%2Fswitch
+// 2. Change the starting snakes segments to ensure all the directions work.
