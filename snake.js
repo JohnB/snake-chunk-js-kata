@@ -52,7 +52,7 @@ var moveSnake = function(snake) {
 // the screen! Copy and paste the following lines into your javascript console
 // a few times:
 
-snake = moveSnake('down', snake);
+snake = moveSnake(snake);
 drawSnake(snake);
 
 // Before moving on:
