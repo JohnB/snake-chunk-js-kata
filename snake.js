@@ -40,7 +40,13 @@ var snake = [{ top: 0, left: 0}];
 // the screen. Let's tell CHUNK to `draw` our `snake`!
 
 var drawableSnake = { color: "blue", pixels: snake };
-CHUNK.draw([drawableSnake]);
+var box = [
+	{top: 5, left: 3}, {top: 5, left: 4}, {top: 5, left: 5}, 
+	{top: 6, left: 3},                    {top: 6, left: 5}, 
+	{top: 7, left: 3}, {top: 7, left: 4}, {top: 7, left: 5}, 
+]
+var drawableBox = { color: "orange", pixels: box };
+CHUNK.draw([drawableSnake, drawableBox]);
 
 // This can be read as:
 // "Hey Sean, create a variable called `drawableSnake`. Make it an object with
