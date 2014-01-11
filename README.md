@@ -25,10 +25,25 @@ To walk through the kata, open a terminal and run the following commands:
                            # Download the code for the kata from github
     cd snake-chunk-js-kata # Change the terminals working directory to the
                            #  directory containing the code
-    open snake.html        # Open the game in your browser
-    bin/rewind             # Go to the beginning of the kata
-    subl .                 # Open the code in the Sublime text editor
+    bin/rewind             # Go to the beginning of the kata (ignore the
+                           # warning about a 'detached head')
+    open index.html        # Open the game in your browser
+    subl index.html snake.js  # Open the code in the Sublime text editor
+
+Read through the index.html file. It mainly sets up an 800x600 canvas and loads
+the snake and chunk javascript files.
+
+Read through the snake.js file. When you get to the bottom there are suggestions
+on how to change the game. Make any changes you want and then refresh the browser
+to see the code run. Don't worry about making a mistake - all your changes will be
+erased when you move on to the next lesson.
+
+## Moving on to the Next Lesson
 
 Once you've read the code and are ready to move to the next step, go back to
-your terminal and run `bin/next`. Refresh the page in your browser to see the
+your terminal and type:
+
+    bin/next               # replaces the code with the next lesson
+
+Refresh the page in your browser to see the new
 code run! (Sublime will automatically update the code).
