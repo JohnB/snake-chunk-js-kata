@@ -48,7 +48,9 @@ var advanceGame = function() {
 }
 
 var changeDirection = function(direction) {
-  snake[0].direction = direction;
+  snake.forEach(function(segment) {
+  	segment.direction = direction;
+  });
 }
 
 var snake = [{ top: 1, left: 0, direction: "down" }, { top: 0, left: 0, direction: "down" }];
