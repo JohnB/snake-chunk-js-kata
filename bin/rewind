@@ -1,5 +1,4 @@
 #!/bin/bash
 
-current_branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
-first_commit=$(git rev-list --reverse $current_branch | head -1)
-git checkout $first_commit
+git checkout v0.1.0
+
