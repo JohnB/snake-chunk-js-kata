@@ -1,6 +1,6 @@
 #!/bin/sh
 
-next_commit=$(git rev-list --reverse HEAD..master | head -1)
-test -n "$next_commit" || die "no commit found towards master"
-git checkout $next_commit
-git log -n1
+export current_lesson=`git symbolic-ref head | cut -c 12-`
+export next_lesson=`git branch --list lesson* | cut -c 3- | sort | grep -A 1 $current_lesson | tail -1`
+git checkout $next_lesson
+
