@@ -2,7 +2,5 @@
 
 export current_minor_branch=`git symbolic-ref head | cut -c 12-15`
 export last_bugfix_branch=`git branch | grep $current_minor_branch |  sort | head -1 | cut -c 3-`
-export next_minor_rev=`git branch | cut -c 3- |  sort | grep -A 1 $last_bugfix_branch |  tail -1`
-export last_bugfix_branch=`git branch | grep $next_minor_rev |  sort | head -1 | cut -c 3-`
 git checkout $last_bugfix_branch
 
