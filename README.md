@@ -25,8 +25,7 @@ To walk through the kata, open a terminal and run the following commands:
                            # Download the code for the kata from github
     cd snake-chunk-js-kata # Change the terminals working directory to the
                            #  directory containing the code
-    bin/rewind             # Go to the beginning of the kata (ignore the
-                           # warning about a 'detached head')
+    bin/rewind             # Go to the beginning of the kata
     open index.html        # Open the game in your browser
     subl index.html snake.js  # Open the code in the Sublime text editor
 
